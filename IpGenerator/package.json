@@ -1,0 +1,24 @@
+{
+  "name": "com.cbb.ipgenerator",
+  "version": "0.0.1",
+  "description": "Ip generator",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Catherine22/Notes"
+  },
+  "keywords": [
+    "Ip",
+    "Ipv4",
+    "Generator"
+  ],
+  "author": "Catherine Chen",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^13.0.2",
+    "electron": "^5.0.6"
+  }
+}
