@@ -1,7 +1,7 @@
 # IPv4 Generator
 Cross-platform application based on Electron framework
 
-![screenshot](https://github.com/Catherine22/Notes/tree/master/IpGenerator/ip_generator.png)
+![screenshot](https://raw.githubusercontent.com/Catherine22/Notes/master/IpGenerator/ip_generator.png)
 
 ## Build
 
