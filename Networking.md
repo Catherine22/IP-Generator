@@ -80,7 +80,7 @@ Class E: 240 - 255
 
 We've been only dealing with class A, B and C. Class D is used for multicast and class E is reserved for experimental purposes.     
 
-```127.X.X.X``` is used for lookback        
+```127.X.X.X``` is used for loopback        
 
 3. 0 - 255      
 0 (```00000000```) - 255 (```11111111```)       

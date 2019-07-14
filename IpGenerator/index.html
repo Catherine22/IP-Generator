@@ -7,6 +7,7 @@
     </head>
 
     <body>
+       <script src="ip_tools.js"></script>
        <h1 style="color:dodgerblue">Welcome to Ip Generator</h1>
        We are using Node.js <span id="node-version"></span>,
        Chromium <span id="chrome-version"></span>,
@@ -18,6 +19,24 @@
        <div id="ipv4_subnet_mask"></div>
 
        <button onclick="onGenerateBtnClicked()">Generate</button>
-       <script src="ip_tools.js"></script>
+
+       <h2>IPv4 Address Validation</h2>
+       <form class="form-inline">
+           <input type="number" class="no-spinners" min="0" id="octet1" max="255"/>
+           <label>.</label>
+           <input type="number" class="no-spinners" min="0" id="octet2" max="255"/>
+           <label>.</label>
+           <input type="number" class="no-spinners" min="0" id="octet3" max="255"/>
+           <label>.</label>
+           <input type="number" class="no-spinners" min="0" id="octet4" max="255"/>
+           <input type="button" value="Verify" onclick="onSubmitGivenIpAddr()">
+       </form>
+
+       <br>
+       <div id="input_ipv4_address"></div>
+       <div id="is_ipv4_valid"></div>
+       <div id="input_ipv4_network_ip"></div>
+       <div id="input_ipv4_broadcast_id"></div>
+       <div id="input_ipv4_subnet_mask"></div>
     </body>
 </html>
