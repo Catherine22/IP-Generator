@@ -2,9 +2,12 @@
   "name": "com.cbb.ipgenerator",
   "version": "0.0.1",
   "description": "Ip generator",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --prune=true --out=release-builds",
+    "build-windows": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Ip Generator\"",
+    "build-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release-builds"
   },
   "repository": {
     "type": "git",
@@ -18,7 +21,8 @@
   "author": "Catherine Chen",
   "license": "MIT",
   "devDependencies": {
-    "standard": "^13.0.2",
-    "electron": "^5.0.6"
+    "electron": "^5.0.6",
+    "electron-packager": "^14.0.1",
+    "standard": "^13.0.2"
   }
 }
