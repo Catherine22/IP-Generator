@@ -2,16 +2,21 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Hello world!</title>
+        <title>Ip Generator</title>
+        <script src="rerender.js"></script>
     </head>
 
     <body>
-       <h1 style="color:dodgerblue">Hello World!</h1>
+       <h1 style="color:dodgerblue">Welcome to Ip Generator</h1>
        We are using Node.js <span id="node-version"></span>,
        Chromium <span id="chrome-version"></span>,
        and Electron <span id="electron-version"></span>.
-    
-    <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
+
+       <h2 id="ipv4_address"></h2>
+       <div id="ipv4_network_ip"></div>
+       <div id="ipv4_broadcast_id"></div>
+
+       <button onclick="onGenerateBtnClicked()">Generate</button>
+       <script src="ip_tools.js"></script>
     </body>
 </html>
