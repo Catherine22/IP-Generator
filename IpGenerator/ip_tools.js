@@ -3,8 +3,8 @@
 const MAX_VALUE = 0b11111111
 const MIN_VALUE = 0b00000000
 
-const IPV4_ADDR = 'Ipv4: '
-const NETWORK_IP = 'Network ip: '
+const IPV4_ADDR = 'IP address: '
+const NETWORK_IP = 'Network id: '
 const BROADCAST_ID = 'Broadcast id: '
 const SUBNET_MASK = 'Subnet mask: '
 const GATEWAY = 'Gateway: '
@@ -12,7 +12,17 @@ const INVALID = 'invalid'
 const LOOPBACK_ADDR = 'Loopback Address'
 const MULTICAST = 'Multicast'
 const EXPERIMENTAL_PURPOSES = 'Experimental purposes'
-const QUESTION_MARK = "??"
+const QUESTION_MARK = '??'
+const VISIBILITY_MODIFIER = {
+  PRIVATE: 'Private ',
+  PUBLIC: 'Public '
+}
+
+const PRIVATE_IP_ADDRESSES = {
+  classA: { from: '10.0.0.0', to: '10.255.255.255' },
+  classB: { from: '172.16.0.0', to: '172.31.255.255' },
+  classC: { from: '192.168.0.0', to: '192.168.255.255' }
+}
 
 function generateIpv4 () {
   var ipAddr = ''
@@ -101,25 +111,25 @@ function getSubnetMask (classType) {
 }
 
 function getGateway (ipv4) {
-    const {
-        ipv4Addr,
-        classType
-    } = ipv4
-    var arr = ipv4Addr.split('.')
-    switch (classType) {
-        case 'A':
-            arr.splice(3, 1, QUESTION_MARK)
-            break
-        case 'B':
-            arr.splice(2, 2, QUESTION_MARK, QUESTION_MARK)
-            break
-        case 'C':
-            arr.splice(1, 3, QUESTION_MARK, QUESTION_MARK, QUESTION_MARK)
-            break
-        default:
-            return 'Not defined'
-    }
-    return arr.join('.')
+  const {
+    ipv4Addr,
+    classType
+  } = ipv4
+  var arr = ipv4Addr.split('.')
+  switch (classType) {
+    case 'A':
+      arr.splice(3, 1, QUESTION_MARK)
+      break
+    case 'B':
+      arr.splice(2, 2, QUESTION_MARK, QUESTION_MARK)
+      break
+    case 'C':
+      arr.splice(1, 3, QUESTION_MARK, QUESTION_MARK, QUESTION_MARK)
+      break
+    default:
+      return 'Not defined'
+  }
+  return arr.join('.')
 }
 
 function random0To255 () {
@@ -144,6 +154,45 @@ function isIpv4Addr (ipAddr) {
   return reg.test(ipAddr)
 }
 
+function isPrivateIp (ipv4) {
+  function isInOfTheRange (value, from, to) {
+    return (value >= parseInt(from)) && (value <= parseInt(to))
+  }
+  const {
+    ipv4Addr,
+    classType
+  } = ipv4
+
+  const arr = ipv4Addr.split('.')
+  var from, to
+
+  switch (classType) {
+    case 'A':
+      from = PRIVATE_IP_ADDRESSES.classA.from.split('.')
+      to = PRIVATE_IP_ADDRESSES.classA.to.split('.')
+      break
+    case 'B':
+      from = PRIVATE_IP_ADDRESSES.classB.from.split('.')
+      to = PRIVATE_IP_ADDRESSES.classB.to.split('.')
+      break
+    case 'C':
+      from = PRIVATE_IP_ADDRESSES.classC.from.split('.')
+      to = PRIVATE_IP_ADDRESSES.classC.to.split('.')
+      break
+    default:
+      return false
+  }
+  var i = 0
+  while (arr[i]) {
+    if (!isInOfTheRange(arr[i], from[i], to[i])) {
+      return false
+    }
+    i++
+  }
+
+  return true
+}
+
 function onSubmitGivenIpAddr () {
   const ipAddr = document.getElementById('octet1').value + '.' +
     document.getElementById('octet2').value + '.' +
@@ -166,18 +215,22 @@ function onSubmitGivenIpAddr () {
     }
     if (classType === 'loopback') {
       document.getElementById('input_ipv4_address').style.color = 'green'
+      document.getElementById('input_ipv4_address').innerHTML = IPV4_ADDR + ipAddr
       document.getElementById('is_ipv4_valid').style.color = 'green'
       document.getElementById('is_ipv4_valid').innerHTML = LOOPBACK_ADDR
     } else if (classType === 'D') {
       document.getElementById('input_ipv4_address').style.color = 'green'
+      document.getElementById('input_ipv4_address').innerHTML = IPV4_ADDR + ipAddr
       document.getElementById('is_ipv4_valid').style.color = 'green'
       document.getElementById('is_ipv4_valid').innerHTML = MULTICAST
     } else if (classType === 'E') {
       document.getElementById('input_ipv4_address').style.color = 'green'
+      document.getElementById('input_ipv4_address').innerHTML = IPV4_ADDR + ipAddr
       document.getElementById('is_ipv4_valid').style.color = 'green'
       document.getElementById('is_ipv4_valid').innerHTML = EXPERIMENTAL_PURPOSES
     } else {
       document.getElementById('input_ipv4_address').style.color = 'green'
+      document.getElementById('input_ipv4_address').innerHTML = (isPrivateIp(ipv4) ? VISIBILITY_MODIFIER.PRIVATE : VISIBILITY_MODIFIER.PUBLIC) + IPV4_ADDR + ipAddr
       document.getElementById('input_ipv4_network_ip').innerHTML = NETWORK_IP + getNetworkIp(ipv4)
       document.getElementById('input_ipv4_broadcast_id').innerHTML = BROADCAST_ID + getBroadcastId(ipv4)
       document.getElementById('input_ipv4_subnet_mask').innerHTML = SUBNET_MASK + getSubnetMask(ipv4.classType)
@@ -188,7 +241,6 @@ function onSubmitGivenIpAddr () {
     document.getElementById('is_ipv4_valid').style.color = 'red'
     document.getElementById('is_ipv4_valid').innerHTML = INVALID
   }
-  document.getElementById('input_ipv4_address').innerHTML = IPV4_ADDR + ipAddr
 }
 
 function onGenerateBtnClicked () {
