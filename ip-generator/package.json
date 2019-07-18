@@ -1,7 +1,7 @@
 {
   "name": "ip-generator",
   "description": "Cross-platform application based on Electron + React framework",
-  "version": "0.1.0",
+  "version": "1.9.4",
   "private": true,
   "author": {
     "name": "Catherine",
@@ -10,7 +10,7 @@
   },
   "build": {
     "appId": "com.catherine.ip-generator",
-    "productName": "Ip Generator",
+    "productName": "IpGenerator",
     "copyright": "Copyright © 2019 ${author}",
     "mac": {
       "category": "public.app-category.utilities"
@@ -55,7 +55,7 @@
     "@rescripts/rescript-env": "^0.0.5",
     "concurrently": "^4.1.0",
     "electron": "^4.0.6",
-    "electron-builder": "^20.38.5",
+    "electron-builder": "20.41.0",
     "eslint-plugin-react": "^7.14.2",
     "typescript": "^3.3.3333",
     "wait-on": "^3.2.0"
