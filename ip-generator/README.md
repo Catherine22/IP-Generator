@@ -6,14 +6,20 @@ Cross-platform application based on Electron + React framework
 ## Build
 
 You could either build an desktop application or just run the html file on browsers.       
-The executable file will be packaged to ```release-builds/```     
+The executable file will be packaged to ```dist/```     
+
+
+Install node modules
+```shell
+npm install
+```
 
 ### Option1, build applications via npm and execute
 ```shell
 npm run electron-dev
 ```
 
-### Option2, package to an app in ```dist/```
+### Option2, package to an app
 ```shell
 npm run electron-pack
 ```
