@@ -1,21 +1,21 @@
 # IPv4 Generator
 Cross-platform application based on Electron + React framework
 
-![screenshot](https://raw.githubusercontent.com/Catherine22/Notes/master/IpGenerator/ip_generator.png)
+![screenshot](https://raw.githubusercontent.com/Catherine22/Notes/master/ip-generator/ip_generator.png)
 
 ## Build
 
 You could either build an desktop application or just run the html file on browsers.       
 The executable file will be packaged to ```release-builds/```     
 
-### Option1, build applications via yarn and execute
+### Option1, build applications via npm and execute
 ```shell
-yarn electron-dev
+npm run electron-dev
 ```
 
 ### Option2, package to an app in ```dist/```
 ```shell
-yarn electron-pack
+npm run electron-pack
 ```
 
 ## Features

@@ -1,5 +1,5 @@
 {
-  "short_name": "Ip generator",
+  "short_name": "IpGenerator",
   "name": "Cross-platform application based on Electron + React framework",
   "icons": [
     {
