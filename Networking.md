@@ -153,7 +153,7 @@ The 6th version
 
 ### Class C
 E.g. 
-ip address: ```192.168.100.3/25```        
+ip address: ```192.168.100.x/25```        
 subnet mask: ```255.255.255.0```     
 
 1. Convert to binary        
@@ -171,7 +171,7 @@ subnet mask: ```255.255.255.0```
 - broadcast ip 2: ```192.168.100.255/25```     
 
 E.g.
-ip address: ```192.168.100.3/26```        
+ip address: ```192.168.100.x/26```        
 
 - 2^6 - 2 = 62 hosts        
 - 4 subnets     
@@ -234,6 +234,39 @@ A.
 | Marketing | 192.168.1.0/26 | 192.168.1.63/26 |
 | Management | 192.168.1.64/26 | 192.168.1.127/26 |
 | Sales | 192.168.1.128/26 | 192.168.1.255/26 |
+
+### Class B
+E.g. 
+ip address: ```172.16.x.x/17```        
+subnet mask: ```255.255.0.0```     
+
+1. Convert to binary        
+-> 11111111.11111111.xxxxxxxx.xxxxxxxx       
+
+2. 17 ```1```       
+-> ```11111111.11111111.1```xxxxxxx.xxxxxxx        
+
+3. 5 bits left, i.e. we have 2^15 - 2 = 32766 hosts (one for network id, the other for broadcast ip)     
+
+4. 2 subnets       
+- network id 1: ```172.16.0.0/17```     
+- broadcast ip 1: ```172.16.127.255/17```     
+- network id 2: ```172.16.128.0/17```     
+- broadcast ip 2: ```172.16.255.255/17```     
+
+E.g.
+ip address: ```172.16.x.x/18```        
+
+- 2^14 - 2 = 8190 hosts        
+- 4 subnets     
+
+| subnet | network id | broadcast |
+| -- | -- | -- |
+| 1 | 172.16.0.0/18 | 172.16.63.255/18 |
+| 2 | 172.16.64.0/18 | 172.16.127.255/18 |
+| 3 | 172.16.128.0/18 | 172.16.191.255/18 |
+| 4 | 172.16.192.0/18 | 172.16.255.255/18 |
+
 
 
 ## References

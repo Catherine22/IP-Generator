@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {
     IPV4_ADDR,
     NETWORK_IP,
-    BROADCAST_ID,
+    BROADCAST_IP,
     SUBNET_MASK,
     GATEWAY,
     LOOPBACK_ADDR,
@@ -37,6 +37,7 @@ class IPv4View extends Component {
             ipv4Addr,
             classType
         };
+
         var ipAddressStr = IPV4_ADDR + ipv4Addr;
         var color = 'black';
         var type = null;
@@ -69,7 +70,7 @@ class IPv4View extends Component {
         }
 
         const networkIp = NETWORK_IP + getNetworkIp(ipv4);
-        const broadcastId = BROADCAST_ID + getBroadcastId(ipv4);
+        const broadcastId = BROADCAST_IP + getBroadcastId(ipv4);
         const subnetMask = SUBNET_MASK + getSubnetMask(classType);
         const gateway = GATEWAY + getGateway(ipv4)
 
@@ -78,7 +79,7 @@ class IPv4View extends Component {
                 <h3 id="ip_address" style={{color: color}}>{ipAddressStr}</h3>
                 {isValid && ipv4Addr && <div id="network_ip">{networkIp}</div>}
                 {type && <div id="type">{type}</div>}
-                {isValid && ipv4Addr && <div id="broadcast_id">{broadcastId}</div>}
+                {isValid && ipv4Addr && <div id="broadcast_ip">{broadcastId}</div>}
                 {isValid && ipv4Addr && <div id="subnet_mask">{subnetMask}</div>}
                 {isValid && ipv4Addr && <div id="gateway">{gateway}</div>}
             </div>

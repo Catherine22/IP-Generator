@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
   IPv4View,
-  IPv4InputField
+  IPv4InputField,
+  SubnetInputField,
+  SubnettingResult
 } from './components'
 import {
   generateIpv4,
@@ -20,6 +22,11 @@ class App extends Component {
       givenIp: {
         ipv4Addr: null,
         classType: null
+      },
+      subnetIp: {
+        ipv4Addr: null,
+        classType: null,
+        subnet: null
       }
     }
   }
@@ -31,15 +38,23 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        {/* Generate a random ip address */}
         <h1 style={{color: 'dodgerblue'}}>Welcome to Ip Generator</h1>
         <IPv4View ipv4Addr = {this.state.randomIp.ipv4Addr} classType = {this.state.randomIp.classType} />
         <br/>
         <button onClick={this.onGenerateBtnClicked}>Reset</button>
 
+        {/* verify the input ip address */}
         <h2> IPv4 Address Validation </h2>
        <IPv4InputField onClick={this.onVerifyIpAddr}/>
        <br/>
-       {this.state.givenIp.ipv4Addr && <IPv4View ipv4Addr = {this.state.givenIp.ipv4Addr} classType = {this.state.givenIp.classType} verify />}
+       {this.state.givenIp.ipv4Addr && 
+       <IPv4View ipv4Addr = {this.state.givenIp.ipv4Addr} classType = {this.state.givenIp.classType} verify />
+       }
+
+       <h2> Subnetting </h2>
+       <SubnetInputField onClick={this.onVerifySubnet}/>
+        {this.state.subnetIp.ipv4Addr && <SubnettingResult subnetIp = {this.state.subnetIp}/>}
       </div>
     );
   }
@@ -51,17 +66,33 @@ class App extends Component {
         ipv4Addr: ipv4.ipv4Addr,
         classType: ipv4.classType
       }
-    })
+    });
   }
 
   onVerifyIpAddr = (ipv4Addr) => {
-    const classType = identify(ipv4Addr.split('.')[0])
+    const classType = identify(ipv4Addr.split('.')[0]);
     this.setState({
       givenIp: {
         ipv4Addr,
         classType
       }
-    })
+    });
+  }
+
+  onVerifySubnet = (ipv4) => {
+    const {
+      ipAddr,
+      subnet
+    } = ipv4;
+
+    const classType = identify(ipAddr.split('.')[0]);
+    this.setState({
+      subnetIp: {
+        ipv4Addr: ipAddr,
+        classType,
+        subnet
+      }
+    });
   }
 }
 
