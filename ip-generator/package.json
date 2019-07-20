@@ -57,6 +57,7 @@
     "electron": "^4.0.6",
     "electron-builder": "20.41.0",
     "eslint-plugin-react": "^7.14.2",
+    "jest": "^24.8.0",
     "typescript": "^3.3.3333",
     "wait-on": "^3.2.0"
   }

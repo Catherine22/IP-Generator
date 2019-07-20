@@ -54,7 +54,7 @@ function decimalToAddrArr(dec) {
 	return binArr;
 }
 
-// E.g. 192.168.0 -> 192.168.0.0
+// E.g. 192.168 -> 192.168.0.0
 function add0ToIpAddrIfNeeded(ipArr) {
 	var newArr = ipArr.slice(0);
 	while (newArr.length < 4) {
@@ -65,13 +65,14 @@ function add0ToIpAddrIfNeeded(ipArr) {
 
 // Identify class type
 export function identify(firstOctet) {
-	if (firstOctet <= 1) return 'invalid';
-	if (firstOctet < 127) return 'A';
-	if (firstOctet == 127) return 'loopback';
-	if (firstOctet < 192) return 'B';
-	if (firstOctet < 224) return 'C';
-	if (firstOctet < 240) return 'D';
-	if (firstOctet <= 255) return 'E';
+	const o = parseInt(firstOctet);
+	if (o <= 1) return 'invalid';
+	if (o < 127) return 'A';
+	if (o === 127) return 'loopback';
+	if (o < 192) return 'B';
+	if (o < 224) return 'C';
+	if (o < 240) return 'D';
+	if (o <= 255) return 'E';
 	return 'invalid';
 }
 
@@ -93,7 +94,7 @@ export function generateIpv4() {
 
 	ipAddr += '.';
 	var octet4 = random0To255();
-	while (octet4 == 0 || octet4 == 255) {
+	while (octet4 === 0 || octet4 === 255) {
 		octet4 = random0To255();
 	}
 	ipAddr += octet4;
@@ -236,11 +237,11 @@ export function calSubnet(ipv4) {
 	} = ipv4;
 
 	if(!isIpv4Addr(ipv4Addr)) {
-		throw 'Illegal ip address';
+		throw new Error('Illegal ip address');
 	}
 
 	if (!(subnet && subnet.length > 0)) {
-		throw 'Subnet cannot be empty';
+		throw new Error('Subnet cannot be empty');
 	}
 
 	var minSubnet;
@@ -268,28 +269,25 @@ export function calSubnet(ipv4) {
 		broadcastIdArr = arr.slice(0, 3);
 		break;
 	default:
-		throw 'Must be class A, B or C';
+		throw new Error('Must be class A, B or C');
 	}
 
 	if (subnet < minSubnet) {
-		throw `The minimum subnet of Class ${classType} must be greater than ${minSubnet}`;
+		throw new Error(`The minimum subnet of Class ${classType} must be greater than ${minSubnet}`);
 	}
 
 	const availableBits = OCTET * 4 - subnet;
-	const hosts = (Math.pow(2, availableBits) - 2); // available hosts (network ip and broadcast ip are not allowed)
+	const hosts = Math.pow(2, availableBits) - 2; // available hosts (network ip and broadcast ip are not allowed)
 	const subnets = Math.pow(2, subnet - minSubnet); // available amount of subnets
 	const range = hosts + 2;
 	const lastBroadcastId = Math.pow(2, OCTET * 4 - minSubnet) - 1;
 
-	console.log('targetBits', targetBits);
-	console.log('range', range);
-	console.log('lastBroadcastId', lastBroadcastId);
 	for (var i = 0; i < lastBroadcastId; i += range) {
-		if (targetBits == i) {
-			throw 'IP address cannot be a network ip';
+		if (targetBits === i) {
+			throw new Error('IP address cannot be a network ip');
 		} else if (targetBits < i) {
-			if (targetBits == i + availableBits - 1) {
-				throw 'IP address cannot be a broadcast ip';
+			if (targetBits === i + availableBits - 1) {
+				throw new Error('IP address cannot be a broadcast ip');
 			} else {
 				networkIdArr = networkIdArr.concat(decimalToAddrArr(i - range));
 				broadcastIdArr = broadcastIdArr.concat(decimalToAddrArr(i - 1));
@@ -312,7 +310,7 @@ export function calSubnet(ipv4) {
 		}
 	}
 
-	throw 'IP address cannot be a broadcast ip';
+	throw new Error('IP address cannot be a broadcast ip');
 }
 
 export function decimalToBinary(ipAddr) {
