@@ -70,7 +70,7 @@ class App extends Component {
   }
 
   onVerifyIpAddr = (ipv4Addr) => {
-    const classType = identify(ipv4Addr.split('.')[0]);
+    const classType = identify(ipv4Addr);
     this.setState({
       givenIp: {
         ipv4Addr,
@@ -85,7 +85,7 @@ class App extends Component {
       subnet
     } = ipv4;
 
-    const classType = identify(ipAddr.split('.')[0]);
+    const classType = identify(ipAddr);
     this.setState({
       subnetIp: {
         ipv4Addr: ipAddr,

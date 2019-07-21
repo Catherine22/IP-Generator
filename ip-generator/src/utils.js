@@ -1,7 +1,7 @@
 
 const MAX_VALUE = 0b11111111;
 const MIN_VALUE = 0b00000000;
-const QUESTION_MARK = '??';
+const QUESTION_MARKS = '??';
 const PRIVATE_IP_ADDRESSES = {
 	classA: {
 		from: '10.0.0.0',
@@ -64,9 +64,11 @@ function add0ToIpAddrIfNeeded(ipArr) {
 }
 
 // Identify class type
-export function identify(firstOctet) {
-	const o = parseInt(firstOctet);
-	if (o <= 1) return 'invalid';
+export function identify(ipAddrStr) {
+	if (!isIpv4Addr(ipAddrStr)) return 'invalid';
+
+	const o = parseInt(ipAddrStr.split('.')[0]);
+	if (o < 1) return 'invalid';
 	if (o < 127) return 'A';
 	if (o === 127) return 'loopback';
 	if (o < 192) return 'B';
@@ -77,31 +79,24 @@ export function identify(firstOctet) {
 }
 
 export function generateIpv4() {
-	var ipAddr = '';
-	var octet1 = random0To255();
-	var classType = identify(octet1);
-	while (classType === 'lookback' || classType === 'invalid' || classType === 'D' || classType === 'E') {
-		octet1 = random0To255();
-		classType = identify(octet1);
+	function randomIp() {
+		var ipAddrArr = [];
+		for (var i = 0; i < 4; i++) {
+			ipAddrArr.push(random0To255());
+		}
+		return ipAddrArr.join('.');
 	}
-	ipAddr += octet1;
 
-	ipAddr += '.';
-	ipAddr += random0To255();
-
-	ipAddr += '.';
-	ipAddr += random0To255();
-
-	ipAddr += '.';
-	var octet4 = random0To255();
-	while (octet4 === 0 || octet4 === 255) {
-		octet4 = random0To255();
+	var ipv4Addr = randomIp();
+	var classType = identify(ipv4Addr);
+	while (!(classType === 'A' || classType === 'B' || classType === 'C')) {
+		ipv4Addr = randomIp();
+		classType = identify(ipv4Addr);
 	}
-	ipAddr += octet4;
 
 	return {
-		ipv4Addr: ipAddr,
-		classType: classType
+		ipv4Addr,
+		classType
 	};
 }
 
@@ -170,13 +165,13 @@ export function getGateway(ipv4) {
 	var arr = ipv4Addr.split('.');
 	switch (classType) {
 	case 'A':
-		arr.splice(3, 1, QUESTION_MARK);
+		arr.splice(3, 1, QUESTION_MARKS);
 		break;
 	case 'B':
-		arr.splice(2, 2, QUESTION_MARK, QUESTION_MARK);
+		arr.splice(2, 2, QUESTION_MARKS, QUESTION_MARKS);
 		break;
 	case 'C':
-		arr.splice(1, 3, QUESTION_MARK, QUESTION_MARK, QUESTION_MARK);
+		arr.splice(1, 3, QUESTION_MARKS, QUESTION_MARKS, QUESTION_MARKS);
 		break;
 	default:
 		return 'Not defined';
@@ -273,12 +268,12 @@ export function calSubnet(ipv4) {
 	}
 
 	if (subnet < minSubnet) {
-		throw new Error(`The minimum subnet of Class ${classType} must be greater than ${minSubnet}`);
+		throw new Error(`The minimum subnets of Class ${classType} must be greater than ${minSubnet}`);
 	}
 
 	const availableBits = OCTET * 4 - subnet;
 	const hosts = Math.pow(2, availableBits) - 2; // available hosts (network ip and broadcast ip are not allowed)
-	const subnets = Math.pow(2, subnet - minSubnet); // available amount of subnets
+	const subnets = Math.pow(2, subnet - minSubnet); // amount of available subnets
 	const range = hosts + 2;
 	const lastBroadcastId = Math.pow(2, OCTET * 4 - minSubnet) - 1;
 
