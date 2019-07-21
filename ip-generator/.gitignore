@@ -8,6 +8,7 @@
 # testing
 /coverage
 /src/tests/__snapshots__
+/src/react-app-env.d.ts
 
 # production
 /build

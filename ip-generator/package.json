@@ -35,6 +35,7 @@
     "start": "rescripts start",
     "build": "rescripts build",
     "test": "rescripts test",
+    "code-coverage": "rescripts test \"--coverage\" \"--watchAll=false\"",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
