@@ -267,6 +267,37 @@ ip address: ```172.16.x.x/18```
 | 3 | 172.16.128.0/18 | 172.16.191.255/18 |
 | 4 | 172.16.192.0/18 | 172.16.255.255/18 |
 
+### Class A
+E.g. 
+ip address: ```10.x.x.x/9```        
+subnet mask: ```255.0.0.0```     
+
+1. Convert to binary        
+-> 11111111.xxxxxxxx.xxxxxxxx.xxxxxxxx       
+
+2. 9 ```1```       
+-> ```11111111.1```xxxxxxx.xxxxxxxx.xxxxxxxx        
+
+3. 5 bits left, i.e. we have 2^15 - 2 = 32766 hosts (one for network id, the other for broadcast ip)     
+
+4. 2 subnets       
+- network id 1: ```172.0.0.0/9```     
+- broadcast ip 1: ```10.127.255.255/9```     
+- network id 2: ```10.128.0.0/9```     
+- broadcast ip 2: ```10.255.255.255/9```     
+
+E.g.
+ip address: ```10.x.x.x/10```        
+
+- 2^22 - 2 = 4,194,302 hosts        
+- 4 subnets     
+
+| subnet | network id | broadcast |
+| -- | -- | -- |
+| 1 | 10.0.0.0/10 | 10.63.255.255/10 |
+| 2 | 10.64.0.0/10 | 10.127.255.255/10 |
+| 3 | 10.128.0.0/10 | 10.191.255.255/10 |
+| 4 | 10.192.0.0/10 | 10.255.255.255 /10 |
 
 
 ## References

@@ -1,7 +1,7 @@
 # IPv4 Generator
 Cross-platform application based on Electron + React framework
 
-![screenshot](https://raw.githubusercontent.com/Catherine22/Notes/master/ip-generator/ip_generator.png)
+![img](./ip_generator.png)
 
 ## Build
 
@@ -26,7 +26,8 @@ npm run electron-pack
 
 ## Features
 1. Generator a random IPv4 address      
-2. Verify any given IPv4 address
+2. Verify any given IPv4 address        
+3. Subnet
 
 ## References
 [How to build an Electron app using Create React App and Electron Builder](https://www.codementor.io/randyfindley/how-to-build-an-electron-app-using-create-react-app-and-electron-builder-ss1k0sfer)

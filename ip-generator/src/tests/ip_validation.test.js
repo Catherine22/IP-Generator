@@ -1,7 +1,8 @@
 import React from 'react';
 import {
 	isIpv4Addr,
-	identify
+	identify,
+	generateIpv4
 } from '../utils';
 import {
 	IPv4View
@@ -20,7 +21,7 @@ const INVALID_IP_ADDRS = [
 ];
 
 // test(name, fn, timeout) is equivalent to it(name, fn, timeout)
-test('verify ip addresses', () => {
+it('verify ip addresses', () => {
 	// [1-255].[0-255].[0-255].[0-255]
 	var validIpArr = [];
 	for (var j=0; j<SAMPLE_COUNT;j++) {
@@ -37,10 +38,24 @@ test('verify ip addresses', () => {
 	});
 });
 
+it('Generate random ip addresses correctly', () => {
+	for (var i = 0; i < SAMPLE_COUNT; i++) {
+		const {
+			ipv4Addr,
+			classType
+		} = generateIpv4();
+		const view = renderer.create(<IPv4View ipv4Addr={ipv4Addr} classType={classType} verify />);
+		const instance = view.root;
+		const ipAddrView = instance.findByType('h3');
+		expect(ipAddrView.props.children).toContain(ipv4Addr);
+		expect(ipAddrView.props.style.color).toBe('green');
+	}
+});
+
 describe('Classify ip addresses correctly', () => {
 	const classArr = ['A', 'B', 'C'];
 
-	test('Check private ip addresses', () => {
+	it('Check private ip addresses', () => {
 		const {
 			classA,
 			classB,
@@ -60,7 +75,7 @@ describe('Classify ip addresses correctly', () => {
 		}
 	});
 
-	test('Check public ip addresses', () => {
+	it('Check public ip addresses', () => {
 		const {
 			classA,
 			classB,
@@ -80,7 +95,7 @@ describe('Classify ip addresses correctly', () => {
 		}
 	});
     
-	test('Check Loopback ip addresses', () => {
+	it('Check Loopback ip addresses', () => {
 		const ipAddrs = generateLoopbackIpAddrs(SAMPLE_COUNT);
 		for (var i = 0; i < ipAddrs.length; i++) {
 			const view = renderer.create(<IPv4View ipv4Addr={ipAddrs[i]} classType={'loopback'} verify />);
@@ -92,7 +107,7 @@ describe('Classify ip addresses correctly', () => {
 		}
 	});
     
-	test('Check ip addresses for multicast purposes', () => {
+	it('Check ip addresses for multicast purposes', () => {
 		const ipAddrs = generateClassDIpAddrs(SAMPLE_COUNT);
 		for (var i = 0; i < ipAddrs.length; i++) {
 			const view = renderer.create(<IPv4View ipv4Addr={ipAddrs[i]} classType={'D'} verify />);
@@ -104,7 +119,7 @@ describe('Classify ip addresses correctly', () => {
 		}
 	});
 
-	test('Check ip addresses for experimental purposes', () => {
+	it('Check ip addresses for experimental purposes', () => {
 		const ipAddrs = generateClassEIpAddrs(SAMPLE_COUNT);
 		for (var i = 0; i < ipAddrs.length; i++) {
 			const view = renderer.create(<IPv4View ipv4Addr={ipAddrs[i]} classType={'E'} verify />);
@@ -116,7 +131,7 @@ describe('Classify ip addresses correctly', () => {
 		}
 	});
     
-	test('Identify ip classes', () => {
+	it('Match classes', () => {
 		const privateAddr = generatePrivateIpAddrs(SAMPLE_COUNT);
 		const publicAddr = generatePublicIpAddrs(SAMPLE_COUNT);
 		const classA = privateAddr.classA.concat(publicAddr.classA);
