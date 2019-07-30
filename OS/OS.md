@@ -93,6 +93,26 @@ int main() {
 ```
 
 ## char
+```C
+#include <stdio.h>
+
+int main() {
+    char zero = 48;
+    char A = 65;
+    char a = 97;
+
+    printf("common characters:\n");
+    printf("%d: %c\n", zero, zero); // 48: 0
+    printf("%d: %c\n", A, A); // 65: A
+    printf("%d: %c\n", a, a); // 97: a
+    return 0;
+}
+```
+
+
+examples of escape sequences:       
+```\b```: backspace (remove the last char)      
+```\t``` and ```\v```: horizontal and vertical tab
 
 # Code
 [Chapter 2 answers](/C_Primer_Plus_5th_Edition_code/)
