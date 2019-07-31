@@ -1,7 +1,7 @@
 # include<stdio.h>
-# include <stdlib.h>
+# include<stdlib.h>
 # include<math.h>
-# include <time.h>
+# include<time.h>
 
 /* 
 Estimate PI via Monte Carlo simulation

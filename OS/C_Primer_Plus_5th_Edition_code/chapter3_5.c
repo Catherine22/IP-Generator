@@ -37,7 +37,8 @@ float toSec(int n)
     return n * 3.1536e+7;
 }
 
-float toSecPrecisely(int m, int d, int y) {
+float toSecPrecisely(int m, int d, int y) 
+{
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
     int thisY = tm.tm_year + 1900;
@@ -92,7 +93,8 @@ float toSecPrecisely(int m, int d, int y) {
     return total;
 }
 
-int daysInMonth(int m, int y) {
+int daysInMonth(int m, int y) 
+{
     if (m == 2) {
         return isLeapYear(y) ? 29 : 28;
     } else if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
@@ -102,6 +104,7 @@ int daysInMonth(int m, int y) {
     }
 }
 
-_Bool isLeapYear(int y) {
+_Bool isLeapYear(int y) 
+{
     return (y % 4 == 0) && ((y % 100 != 0) || (y % 400 == 0));
 }
